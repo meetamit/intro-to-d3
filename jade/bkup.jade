@@ -1,0 +1,1516 @@
+doctype html
+html
+head
+  meta(charset="utf-8")
+
+  title Intro to D3
+
+  meta(name="description", content="Slides from my \"Advanced D3\" talk")
+  meta(name="author", content="Amit Schechter")
+
+  meta(name="apple-mobile-web-app-capable", content="yes")
+  meta(name="apple-mobile-web-app-status-bar-style", content="black-translucent")
+  meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+
+  link(rel="stylesheet", href="css/reveal.min.css")
+  link(rel="stylesheet", href="css/theme/serif.css", id="theme")
+
+  //- For syntax highlighting
+  link(rel="stylesheet", href="lib/css/zenburn.css")
+
+  style.
+    .reveal {
+      cursor:pointer;
+    }
+
+    .right-hand {
+      text-align: right;
+      float: right
+    }
+    .reveal pre code, .reveal pre .code {
+      padding: 20px;
+    }
+    .reveal .right-hand pre {
+      width: auto;
+      margin: 0;
+    }
+    .reveal .right-hand pre code {
+      padding: 20px 40px;
+      max-height: none;
+    }
+
+    //- .code-context {}
+    .reveal pre.code-left {
+      float: left;
+      width: 48%;
+      font-size: .45em;
+    }
+    .reveal pre.code-right {
+      width: 48%;
+      float: right;
+      font-size: .45em;
+    }
+    .reveal pre.code-fullwidth {
+      width: 100%;
+    }
+
+    .reveal .link-frame {
+      background: white;
+      border: 1px solid #aaa;
+      padding: 40px 60px;
+      display:inline-block;
+    }
+    .reveal .link-frame a {
+      color: #0099ff;
+    }
+
+    .reveal .example {
+      text-align: left;
+      margin-left: 50%;
+      margin-top: 1.2em;
+    }
+
+    .reveal .example .film {
+      font-size: 25px;
+      line-height: 1.5;
+      background: rgba(0,0,0,.19);
+      height: 1.3em;
+    }
+
+    .reveal .example .graphic {
+      position: relative;
+      min-height: 460px;
+    }
+    .reveal .example .graphic .film {
+      color: black;
+      font-size: 16px;
+      white-space: nowrap;
+      margin: 8px 0;
+      padding: 5px 0;
+      opacity: 1;
+      //- position: absolute;
+      text-indent: 3px;
+      font-weight: bold;
+    }
+
+    .reveal .example .example-controls { text-align: left; max-width: 500px; font-size:20px; }
+    .reveal .example .example-controls a { margin: 0 5px; }
+
+    .package-list li {
+      font-size:.75em;
+      margin: 0.5em 0;
+    }
+    .package-list h4 {
+      margin: 0;
+      line-height: 1;
+    }
+    .package-list p {
+      margin: 0;
+      line-height: 1;
+      font-size:.75em;
+      color: #777;
+    }
+
+  body
+    .reveal
+      .slides
+        section
+          h1 intro to d3
+          p(style="line-height:.8; margin-bottom:0;")
+            small By <a href="http://two-n.com">Amit Schechter</a> / <a href="http://twitter.com/meetamit">@meetamit</a>
+            br
+            small Co-founder, <a href="http://two-n.com">TWO-N</a>
+            br
+            a(href="http://two-n.com", style="display:inline-block; opacity:.6; background:url(img/2n_logo.png) no-repeat center center; background-size:contain; width:90px; height:90px;")
+            br
+          br
+          p Slides available at
+            br
+            a(href="http://www.two-n.com/talks/intro-to-d3") www.two-n.com/talks/intro-to-d3
+
+        section
+          section(data-background="http://two-n.com/projects/art-genome-browser/1.jpg", data-background-size="contain")
+          section(data-background="http://two-n.com/projects/art-genome-browser/2.jpg", data-background-size="contain")
+          section(data-background="http://two-n.com/projects/art-genome-browser/3.jpg", data-background-size="contain")
+          section(data-background="http://two-n.com/projects/art-genome-browser/5.jpg", data-background-size="contain")
+
+          section(data-background="http://two-n.com/projects/lgbt-divide/3.jpg", data-background-size="contain")
+          section(data-background="http://two-n.com/projects/lgbt-divide/4.jpg", data-background-size="contain")
+
+          section(data-background="http://two-n.com/projects/stockmapper/1.jpg", data-background-size="contain")
+          section(data-background="http://two-n.com/projects/stockmapper/2.jpg", data-background-size="contain")
+
+          section(data-background="img/talent-lab_1.png", data-background-size="contain")
+          section(data-background="img/talent-lab_2.png", data-background-size="contain")
+          section(data-background="img/talent-lab_3.png", data-background-size="contain")
+
+          section
+            <iframe src="https://player.vimeo.com/video/125092880?autoplay=1&color=ff9933&title=0&byline=0" width="800" height="600" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+          section(data-background="http://two-n.com/projects/wind4d/2.jpg", data-background-size="contain")
+
+          section
+            h2 Current stack
+            ul
+              li d3
+              li.fragment React
+              li.fragment Node.js
+            p
+              img.fragment(src="img/stack-overflow.png", style="border:none;")
+
+        section(style="font-size: 0.83em; line-height: 1.5;")
+          h2 Data-Driven Documents
+          ul
+            li JavaScript library for manipulating documents based on data
+            li.fragment Persistent binding of data models to DOM elements
+            li.fragment Convenient, declarative way to style the DOM based on data
+            li.fragment Add/update/remove elements when data (or state) changes
+            li.fragment Fine-grained control over transitions between states
+            br
+            li.fragment You might not use any of the above!
+            li.fragment Data Transformations
+            br
+            li.fragment Not a compatibility layer for old browsers
+            li.fragment Not an SVG library
+              span.fragment ... but has features to work with SVG
+
+        section
+          section
+            h2(data-markdown) Somewhat like jQuery
+            pre.code-left
+              code.javascript.
+                $('div')
+                  .css('background', 'hotpink')
+                  .toggleClass('same', true)
+                  .text('same')
+                  .click(function() {});
+            .fragment
+              pre.code-right
+                code.javascript.
+                  d3.selectAll('div')
+                    .style('background', 'hotpink')
+                    .classed('same', true)
+                    .text('same')
+                    .on('click', function() {});
+              p(style="padding-top:70px; font-size:.9em;") ⇔
+            pre.fragment.code-left
+              code.javascript.
+                $('.parent')
+                  .append('div')
+                  .addClass('child')
+            .fragment
+              pre.code-right
+                code.javascript.
+                  d3.selectAll('.parent')// or d3.select(...)
+                    .append('div')
+                    .attr('class', 'child')
+              p(style="padding-top:90px; font-size:.9em;") ⇔
+            p.fragment(style="clear:both;") also attr(), html(), property()
+
+          section
+            h3(data-markdown) 2nd argument can be a **function(d, i)**
+            pre.highlight
+              .code.javascript
+                span.
+                  d3.selectAll('div')
+                    .style('color', 'white')
+                    .style('background', function(d, i) {
+                      return i % 2 === 0 ? 'gray' : 'darkgray';
+                    })
+                span.fragment.
+                  &nbsp;
+                    .classed('declined', function(d, i) {
+                      return d.changeAmount < 0;
+                    })
+                span.fragment.
+                  &nbsp;
+                    .text(function(d, i) {
+                      return d.displayName;
+                    });
+            p.fragment(data-markdown style="clear:both;") `d` is for **datum**
+
+        section
+          section
+            h2 Data Binding
+            pre.highlight
+              .code.javascript
+                span.
+                  var films = [
+                    "Dangerous Liaisons", "In the Line of Fire",
+                    "Being John Malkovich", "Con Air",
+                    "Burn After Reading", "Drunkboat"
+                  ]
+
+                span.fragment.
+                  &nbsp;
+                  d3.selectAll('div').data(films) // setter
+
+                span.fragment.
+                  &nbsp;
+                  d3.selectAll('div').data() // getter
+                span.fragment.
+                  &nbsp;
+                  /*
+                  ["Dangerous Liaisons", "In the Line of Fire", "Being John Malkovich",
+                  "Con Air", "Burn After Reading", "Drunkboat"]
+                  */
+
+                span.fragment.
+                  &nbsp;
+                  d3.selectAll('div:nth-child(even)').data()
+                span.fragment.
+                  &nbsp;
+                  // ["In the Line of Fire", "Con Air", "Drunkboat"]
+
+                span.fragment.
+                  &nbsp;
+                  d3.selectAll('div:nth-child(3)').data()
+                  // ["Being John Malkovich"]
+
+                span.fragment.
+                  &nbsp;
+                  d3.selectAll('div:nth-child(3)').datum()
+                span.fragment.
+                  &nbsp;
+                  // "Being John Malkovich"
+
+          section
+            h3 Data Binding Example
+            pre.code-left
+              code.javascript.
+                var films = [
+                  "Dangerous Liaisons", "In the Line of Fire",
+                  "Being John Malkovich", "Con Air",
+                  "Burn After Reading", "Drunkboat"
+                ];
+
+            .fragment
+              pre.code-left(style="clear:both;")
+                code.xml.
+                  <div class='film'>Malkovich</div>
+                  <div class='film'>Malkovich</div>
+                  <div class='film'>Malkovich</div>
+                  <div class='film'>Malkovich</div>
+                  <div class='film'>Malkovich</div>
+                  <div class='film'>Malkovich</div>
+
+            .example.simple-binding.fragment
+              .film Malkovich
+              .film Malkovich
+              .film Malkovich
+              .film Malkovich
+              .film Malkovich
+              .film Malkovich
+
+            .fragment
+              pre.code-left(style="clear:both;")
+                code.javascript.
+                  d3.selectAll('.film')
+                    .data(films)
+                    .text(function(d, i) {
+                      return i + ': ' + d
+                    })
+              a#run-simple-binding(href="javascript:void(0);", style="float: left; clear: both; margin-top:-1.2em; font-size:15px;") RUN
+
+          section
+            h3 Data Binding Example (cont'd)
+            pre.highlight.code-left
+              .code.javascript
+                span.
+                  d3.selectAll('.film')
+                    .data(films)
+                    .text(function(d, i) {
+                      return i + ': ' + d
+                    })
+                span.fragment(data-fragment-index="1").
+                  &nbsp;
+                    .style('color', function(d) {
+                      if(d.indexOf('Malkovich') > -1)
+                        return 'black';
+                      else
+                        return 'gray';
+                    })
+                span.fragment(data-fragment-index="2").
+                  &nbsp;
+                    .on('click', function(d) {
+                      alert(d);
+                span.fragment(data-fragment-index="3").
+                  &nbsp;
+                      console.log(this);// DOM element
+                span.fragment(data-fragment-index="2").
+                  &nbsp;
+                    });
+            a#run-simple-binding-part-2(href="javascript:void(0);", style="float: left; clear: both; margin-top:-1.2em; font-size:15px;") RUN
+
+            .example.simple-binding
+              .film Malkovich
+              .film Malkovich
+              .film Malkovich
+              .film Malkovich
+              .film Malkovich
+              .film Malkovich
+            //- div Amit was here<br/><br/><br/><br/>Amit was here
+
+          section
+            //- h4(data-markdown) When the number of **data** records **mismatches** number of **DOM** elements in a selection
+            h4(data-markdown) When there are fewer **data records** than **DOM elements** in a selection
+            pre.highlight.code-left
+              .code.javascript
+                span.
+                  var films = [
+                    "Dangerous Liaisons",
+                    "In the Line of Fire",
+                    "Being John Malkovich",
+                    "Con Air",
+                    "Burn After Reading",
+                    "Drunkboat"
+                  ];
+
+                span.fragment.
+                  &nbsp;
+                  // Bind 6 datums to 2 DOM elements
+                  var sel = d3.select('.list')
+                    .selectAll('.film').data(films);
+
+                span.fragment.
+                  &nbsp;
+                  sel.data();
+
+                span.fragment.
+                  //["Dangerous Liaisons", "In Line of Fire"]
+                  // (length = 2)
+
+            pre.highlight.code-right
+              code.code.xml.
+                <div class="list">
+                  <div class='film'>Malkovich</div>
+                  <div class='film'>Malkovich</div>
+                </div>
+
+            pre.highlight.code-left.fragment(style="clear:both;")
+              .code.javascript
+                span.
+                  sel.enter().data();
+
+                span.fragment.
+                  // ["Being John Malkovich", "Con Air",
+                  // "Burn After Reading", "Drunkboat"]
+                  // (length = 4)
+
+          section
+            //- h4(data-markdown) When the number of **data** records **mismatches** number of **DOM** elements in a selection
+            h4(data-markdown) When there are more **data records** than **DOM elements** in a selection
+            pre.highlight.code-left
+              .code.javascript
+                span.
+                  var films = [
+                    "Dangerous Liaisons",
+                    "In the Line of Fire",
+                  ];
+
+                span.fragment.
+                  &nbsp;
+                  // Bind 2 datums to 6 DOM elements
+                  var sel = d3.select('.list')
+                    .selectAll('.film').data(films);
+
+                span.fragment.
+                  &nbsp;
+                  sel.data();
+
+                span.fragment.
+                  //["Dangerous Liaisons", "In Line of Fire"]
+                  // (length = 2)
+
+            pre.highlight.code-right
+              code.code.xml.
+                <div class="list">
+                  <div class='film'>Malkovich</div>
+                  <div class='film'>Malkovich</div>
+                  <div class='film'>Malkovich</div>
+                  <div class='film'>Malkovich</div>
+                  <div class='film'>Malkovich</div>
+                  <div class='film'>Malkovich</div>
+                </div>
+
+            pre.highlight.code-left.fragment(style="clear:both;")
+              .code.javascript
+                span.
+                  sel.exit().data();
+
+                span.fragment.
+                  // [undefined, undefined, undefined,
+                  //   undefined]
+                  // (length = 4)
+
+        section
+          section
+            h3 More interesting data
+            pre.highlight
+              code.javascript.
+                var films = [
+                  {
+                    name: "Death of a Salesman",
+                    critics: 100,
+                    audience: 75
+                  },{
+                    name: "Empire of the Sun",
+                    critics: 92,
+                    audience: 90
+                  },{
+                    name: "Dangerous Liaisons",
+                    critics: 93,
+                    audience: 83
+                  },{
+                    name: "In the Line of Fire",
+                    critics: 95,
+                    audience: 79
+                  },{
+                    name: "Con Air",
+                    critics: 55,
+                    audience: 75
+                  },{
+                    name: "Being John Malkovich",
+                    critics: 93,
+                    audience: 87
+                  },{
+                    name: "Art School Confidential",
+                    critics: 36,
+                    audience: 48
+                  },{
+                    name: "Beowulf",
+                    critics: 71,
+                    audience: 50
+                  },{
+                    name: "Burn After Reading",
+                    critics: 78,
+                    audience: 64
+                  },{
+                    name: "Transformers: Dark of the Moon",
+                    critics: 36,
+                    audience: 56
+                  },{
+                    name: "Drunkboat",
+                    critics: 25,
+                    audience: 24
+                  }
+                ];
+          section
+            h3 Load data asynchronously
+            pre.highlight
+              .code.javascript
+                span.
+                  var films;
+
+                  d3.json('films.json', function(error, data) {
+                    films = data;
+                span.fragment(data-fragment-index="1").
+                  &nbsp;
+                    render();
+                span.
+                  &nbsp;
+                  });
+
+                span.fragment(data-fragment-index="1").
+                  &nbsp;
+                  function render() {
+                    // films array is in scope here
+                  }
+        section
+          section
+            h4(data-markdown) Appending DOM elements with **selection.enter()**
+            pre.highlight.code-left
+              code.xml.
+                <div class='list'>
+                  <!-- div class='film'></div -->
+                </div>
+            pre.highlight.code-left(style='clear: left;')
+              .code.javascript
+                span.
+                  function render() {
+                    var selection = d3.select('.list')
+                      .selectAll('.film')
+                      .data(films);
+
+                span.fragment(data-fragment-index="1").
+                  &nbsp;
+                    selection.enter()
+                      .append('div')
+                span.fragment(data-fragment-index="2", data-fragment-trigger="enter-append").
+                  &nbsp;
+                      .attr('class', 'film')
+                span.fragment(data-fragment-index="3", data-fragment-trigger="enter-text").
+                  &nbsp;
+                      .text(function(d, i) {
+                        return d.critics + '% - ' + d.name;
+                      })
+                span.fragment(data-fragment-index="4", data-fragment-trigger="enter-color").
+                  &nbsp;
+                      .style('background', function(d) {
+                        if(d.critics > d.audience)
+                          return 'lightGreen';
+                        else return 'orange';
+                      })
+                span.fragment(data-fragment-index="5", data-fragment-trigger="enter-width").
+                  &nbsp;
+                      .style('width', function(d) {
+                        return (d.critics * 4) + 'px';
+                      })
+                span.
+                  &nbsp;
+                  }
+                span.fragment(data-fragment-index="6").
+                  &nbsp;
+                  render();
+                  render();// Idempotent
+            .example.append
+              .graphic.list
+
+        section
+          section
+            h3 Updating
+            pre.highlight.code-left(style='clear: left;')
+              code.xml.
+                <!-- for demo purposes -->
+                <a onclick="metric='audience'; render();">
+                  Audience Reviews
+                </a>
+            pre.highlight.code-left.fragment(data-fragment-index="1", data-fragment-trigger="updating", style='clear: left;')
+              .code.javascript
+                span.
+                  var metric = "critics";// or "audience"
+
+                  function render() {
+                    var selection = d3.select('.list')
+                      .selectAll('.film')
+                      .data(films);
+
+                span.fragment(data-fragment-index="2").
+                  &nbsp;
+                    var entering = selection.enter()
+                      .append('div')
+                      .attr('class', 'film')
+
+                span.fragment(data-fragment-index="3").
+                  &nbsp;
+                    selection.merge(entering)
+                      .text(function(d, i) { .... }
+                      .style('background', function(d) { ....  }
+                span.fragment(data-fragment-index="4").
+                  &nbsp;
+                      .style('width', function(d) {
+                        return (d[metric] * 4) + 'px';
+                      })
+                span.
+                  &nbsp;
+                  }
+            .example.append
+              .example-controls
+                a(href="javascript:void(0);", onclick="metric='critics'; render();") Critic Reviews
+                | |
+                a(href="javascript:void(0);", onclick="metric='audience'; render();") Audience Reviews
+              .graphic.list
+
+        section
+          section
+            h3 Transitions
+            pre.highlight.code-left.fragment(data-fragment-index="1", data-fragment-trigger="updating" style='clear: left;')
+              .code.javascript
+                span.
+                  function render() {
+                    // ....
+                    selection.merge(entering)
+                      .transition()
+                      .duration(400)
+                      .delay(function(d, i) { return i * 50; })
+                      .style('width', function(d) {
+                        return (d[metric] * 4) + 'px';
+                      })
+                    // ....
+                  }
+            .example.append.with-transitions.with-delay
+              .example-controls
+                a(href="javascript:void(0);", onclick="metric='critics'; render();") Critic Reviews
+                | |
+                a(href="javascript:void(0);", onclick="metric='audience'; render();") Audience Reviews
+              .graphic.list
+
+        section
+          section
+            h3 Object Constancy
+            pre.highlight.code-left(style='clear: left;')
+              .code.javascript
+                span.
+                  function render() {
+                    var subset = films.filter(....);
+
+                    var selection = d3.select('.list')
+                      .selectAll('.film')
+                      .data(subset, function(d) {
+                        return d.name;// unique key
+                      });
+
+                span.fragment(data-fragment-index="1", data-fragment-trigger="updating").
+                  &nbsp;
+                    selection.enter()
+                      .style('width', '0px')
+                span.fragment(data-fragment-index="2").
+                  &nbsp;
+                    // ....
+                    selection.merge(entering)
+                      .transition()
+                      .duration(400)
+                      .style('width', function(d) {
+                        return (d[metric] * 4) + 'px';
+                      })
+                    // ....
+                span.fragment(data-fragment-index="3").
+                  &nbsp;
+                    selection.exit()
+                      .transition()
+                      .duration(400)
+                      .style('width', '0px')
+                      .remove();// remove AFTER transition
+                span.
+                  &nbsp;
+                  }
+            .example.append.with-transitions.with-delay
+              .example-controls
+                a(href="javascript:void(0);", onclick="subset='critics'; render();", style="color:lightGreen;") Critics Preferred
+                | |
+                a(href="javascript:void(0);", onclick="subset='audience'; render();", style="color:orange;") Audience Preferred
+                | |
+                a(href="javascript:void(0);", onclick="subset='all'; render();") All
+              .graphic.list
+
+        section
+          section
+            h3 Scales
+            pre.highlight
+              .code.javascript
+                span.
+                  lengthScale = d3.scaleLinear()
+                    .domain([0, 100])
+                    .range([0, 400])
+
+                span.fragment.
+                  &nbsp;
+                  lengthScale(0); // returns 0
+                span.fragment.
+                  &nbsp;
+                  lengthScale(100); // returns 400
+                span.fragment.
+                  &nbsp;
+                  lengthScale(50); // returns 200
+            .fragment
+              h4 Replace
+              pre.highlight
+                code.javascript.
+                  .style('width', function(d) {
+                    return (d[metric] * 4) + 'px';
+                  }))
+            .fragment
+              h4 With
+              pre.highlight
+                code.javascript.
+                  .style('width', function(d) {
+                    return lengthScale(d[metric]) + 'px';
+                  })
+
+          section
+            h3 Axes
+            pre.highlight.code-left(style='clear: left;')
+              code.xml.
+                <svg>
+                  <g class="axis"></g>
+                </svg>
+            pre.highlight.code-left.fragment(data-fragment-index="1", data-fragment-trigger="updating", style='clear: left;')
+              .code.javascript
+                span.
+                  var barLength = d3.scale.linear()
+                    .domain([0,100])
+                    .range([0,400]);
+
+                span.fragment(data-fragment-index="2", data-fragment-trigger="updating").
+                  &nbsp;
+                  var axis = d3.axisTop()
+                span.fragment(data-fragment-index="3", data-fragment-trigger="updating").
+                  &nbsp;
+                    .scale(barLength)
+                span.fragment(data-fragment-index="4", data-fragment-trigger="updating").
+                  &nbsp;
+                    .ticks(5);
+
+                span.fragment(data-fragment-index="5", data-fragment-trigger="updating").
+                  &nbsp;
+                  function render() {
+                    // ....
+                    d3.select('svg g.axis')
+                      .transition()
+                      .call(axis);
+                    // ....
+                  }
+            .example.append.with-transitions
+              code.example-controls(style="font-size:15px")
+                a(href="javascript:void(0);", onclick="barLength=d3.scaleLinear(); render();") d3.scaleLinear()
+                | |
+                a(href="javascript:void(0);", onclick="barLength=d3.scalePow().exponent(2); render();") d3.scalePow()
+                | |
+                a(href="javascript:void(0);", onclick="barLength=d3.scaleLog(); render();") d3.scaleLog()
+              svg(width="430", height="24", style="margin-left:-10px;")
+                g.axis(transform="translate(10,23)")
+              .graphic.list
+
+        section
+          section
+            h3 Loading D3 into your project
+          section
+            h3 Script Tag
+            h4 From CDN
+            pre.highlight
+              code.code.xml.
+                &lt;html>
+                  &lt;head>&lt;/head>
+                  &lt;body>
+                    <div id="chart"> </div>
+                  &lt;/body>
+                  &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.4.0/d3.js">&lt;/script>
+                  &lt;script type="text/javascript">
+                    var chart = d3.select('#chart');
+                  &lt;/script>
+                &lt;/html>
+            .fragment
+              h4 From your JS bundle
+              pre.highlight
+                code.code.xml.
+                  &nbsp;&nbsp;&lt;script src="path/to/bundle.js"></script>
+          section
+            h3 Node.js module
+            .Xfragment
+              h4(style="margin-bottom: 0") Install
+              pre.highlight.code-left
+                .code.shell.
+                  npm install d3
+              pre.highlight.code-right.fragment
+                .code.javascript.
+                  npm install d3-selection
+
+            .fragment(style="clear:both")
+              h4(style="margin-bottom: 0") require
+              pre.highlight.code-left
+                .code.javascript.
+                  var d3 = require('d3');
+                  d3.select('#chart');
+              pre.highlight.code-right.fragment
+                .code.javascript.
+                  var d3Selection = require('d3-selection')
+                  d3Selection.select('#chart');
+
+            .fragment(style="clear:both")
+              h4(style="margin-bottom: 0") or import
+              pre.highlight.code-left
+                .code.javascript.
+                  import * as d3 from 'd3'
+                  d3.select('#chart');
+              pre.highlight.code-right.fragment
+                .code.javascript.
+                  import { select } from 'd3-selection'
+                  select('#chart');
+        section
+          section
+            h2 D3 packages/submodules
+          section
+            h4 D3 packages/submodules
+            ul.package-list
+              li
+                h4 d3-selection
+                p Transform the DOM by selecting elements and joining to data.
+              li
+                h4 d3-transition
+                p Animated transitions for D3 selections.
+              li
+                h4 d3-ease
+                p Easing functions for smooth animation.
+              li
+                h4 d3-selection-multi
+                p Multi-value syntax for d3-selection and d3-transition.
+
+
+          section
+            h4 D3 packages/submodules
+            ul.package-list
+              li
+                h4 d3-scale
+                p Encodings that map abstract data to visual representation.
+
+              li
+                h4 d3-format
+                p Format numbers for human consumption.
+
+              li
+                h4 d3-time-format
+                p Parse and format times, inspired by strptime and strftime.
+
+              li
+                h4 d3-interpolate
+                p Interpolate numbers, colors, strings, arrays, objects, whatever!
+
+              li
+                h4 d3-random
+                p Generate random numbers from various distributions.
+
+              li
+                h4 d3-time
+                p A calculator for humanity’s peculiar conventions of time.
+          section
+            h4 d3-format
+            pre.highlight
+              .code.javascript
+                span.
+                  var formatter = d3.format(',.2f');
+                  formatter(12345678.1234567);// "12,345,678.12"
+
+                span.fragment.
+                  &nbsp;
+                  var formatter = d3.format('$,.6r')
+                  formatter(12345678.1234567);// "$12,345,700"
+
+                span.fragment.
+                  &nbsp;
+                  var formatter = d3.format('$,.4s')
+                  formatter(123456);// "$123.5k"
+                  formatter(1234567);// "$1.235M"
+            .fragment
+              h4 Works with Axes
+              pre.highlight
+                .code.javascript.
+                  d3.axisLeft()
+                    .tickFormat(formatter)
+          section
+            h4 d3-scale ordinal
+            pre.highlight
+              .code.javascript
+                span.
+                  var animalColor = d3.scaleOrdinal()
+                    .domain(['Dog', 'Cat', 'Anteater'])// Possible input values
+                    .range(['red', 'green', 'blue']);// Mapped to output values
+                span.fragment.
+                  &nbsp;
+                  animalColor('Anteater');// "blue"
+          section
+            h4 d3-interpolate
+            pre.highlight
+              .code.javascript
+                span.
+                  var interpolate = d3.interpolate(2, 10)
+                  interpolate(.5);// returns 6
+
+                span.fragment.
+                  &nbsp;
+                  var interpolateRgb = d3.interpolateRgb('#f00', '#00f')
+                  interpolateRgb(.4);// '#990066'
+
+
+          section
+            h4 D3 packages/submodules
+            ul.package-list
+              li
+                h4 d3-color
+                p Color spaces! RGB, HSL, Cubehelix, Lab (CIELAB) and HCL (CIELCH).
+
+              li
+                h4 d3-hsv
+                p The HSV (Hue, Saturation, Value) color space.
+
+              li
+                h4 d3-hcg
+                p The HCG (Hue, Chroma, Grayness) color space derived from the Munsell color system.
+
+              li
+                h4 d3-scale-chromatic
+                p Sequential, diverging and categorical color scales derived from ColorBrewer.
+          section
+            h4 d3-color examples
+            pre.highlight
+              .code.javascript
+                span.
+                  d3.rgb('#aa3399').brighter().toString();
+                span.fragment.
+                  &nbsp;
+                  // '#f248da'
+
+                span.fragment.
+                  &nbsp;
+                  d3.rgb('purple').r;
+                span.fragment.
+                  &nbsp;
+                  // 128
+
+                span.fragment.
+                  &nbsp;
+                  d3.rgb('rgb(64, 0, 200)').hsl();
+                span.fragment.
+                  &nbsp;
+                  // { h: 259.2, l: 0.3921, s: 1 }
+            .fragment
+              pre.highlight
+                .code.javascript
+                  span.
+                    animalColor.range(d3.schemeCategory20)
+
+                  span.fragment.
+                    &nbsp;
+                    animalColor('Dog');// "#1f77b4" (blue)
+                    animalColor('Cat');// "#ff7f0e" (orange)
+              pre.highlight
+                code.javascript.
+                  // ["#1f77b4", "#aec7e8", "#ff7f0e", "#ffbb78", "#2ca02c", "#98df8a", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94", "#e377c2", "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5"]
+              img(src="img/category10.png", style="border:none;")
+
+
+          section
+            h4 D3 packages/submodules
+            ul.package-list
+              li
+                h4 d3-drag
+                p Drag and drop SVG, HTML or Canvas using mouse or touch input.
+
+              li
+                h4 d3-zoom
+                p Pan and zoom SVG, HTML or Canvas using mouse or touch input.
+
+              li
+                h4 d3-brush
+                p Select a one- or two-dimensional region using the mouse or touch.
+
+          section
+            h4 D3 packages/submodules
+            ul.package-list
+              li
+                h4 d3-shape
+                p Graphical primitives for visualization, such as lines and areas.
+
+              li
+                h4 d3-axis
+                p Human-readable reference marks for scales.
+
+              li
+                h4 d3-path
+                p Serialize Canvas path commands to SVG.
+
+          section
+            h4 D3 packages/submodules
+            ul.package-list
+              li
+                h4 d3-geo-projection
+                p Extended geographic projections for d3-geo.
+
+              li
+                h4 d3-geo
+                p Geographic projections, spherical shapes and spherical trigonometry.
+
+              li
+                h4 d3-tile
+                p Compute the quadtree tiles to display in a rectangular viewport.
+
+
+          section
+            h4 D3 packages/submodules
+            ul.package-list
+              li
+                h4 d3-array
+                p Array manipulation, ordering, searching, summarizing, etc.
+
+              li
+                h4 d3-collection
+                p Handy data structures for elements keyed by string.
+
+              li
+                h4 d3-quadtree
+                p Two-dimensional recursive spatial subdivision.
+
+              li
+                h4 d3-polygon
+                p Geometric operations for two-dimensional polygons.
+          section
+            h4 d3-array functions
+            pre.highlight
+              .code.javascript
+                span.
+                  function rating(d) { return d.critics; }
+
+                span.fragment.
+                  &nbsp;
+                  d3.min(films, rating);// 25
+                span.fragment.
+                  &nbsp;
+                  d3.extent(films, rating);// [25, 100]
+                span.fragment.
+                  &nbsp;
+                  d3.mean(films, rating); // 70.36363636
+          section
+            h4 d3-collection nest()
+            pre.highlight
+              code.javascript(style="font-size:.9em; line-height: 1.1;").
+                var nested_data = d3.nest()
+                  .key(function(d) { return d.status; })
+                  .entries(oneDimensionalArrayOfObjects);
+            pre.highlight.fragment
+              code.javascript(style="font-size:.7em; line-height:1.2; max-height:130px").
+                [{
+                  "key": "Complete",
+                  "values": [{
+                    "id": "T-024",
+                    "name": "Organisation list in directory",
+                    "priority": "MUST",
+                    "who": "Joe",
+                    "time": "5",
+                    "status": "Complete"
+                  },{
+                    "id": "T-015",
+                    "name": "Make term Commissions customisable",
+                    "priority": "MUST",
+                    "who": "Natasha",
+                    "time": "6",
+                    "status": "Complete"
+                  }]
+                },{
+                  "key": "In Progress",
+                  "values": [{
+                    "id": "T-016",
+                    "name": "Comments popup on select rates",
+                    "priority": "MUST",
+                    "who": "Mike",
+                    "time": "3",
+                    "status": "In Progress"
+                  },{
+                    "id": "T-0169",
+                    "name": "Upgrade Centos Box",
+                    "priority": "MUST",
+                    "who": "Joe",
+                    "time": "2",
+                    "status": "In Progress"
+                  },{
+                    "id": "T-013",
+                    "name": "Search in Documents on selected folder",
+                    "priority": "MUST",
+                    "who": "Natasha",
+                    "time": "6",
+                    "status": "In Progress"
+                  }]
+                },{
+                  "key": "Not Started",
+                  "values": [{
+                    "id": "T-021",
+                    "name": "Fix error where forum filename is greater than 100chars",
+                    "priority": "MUST",
+                    "who": "Mike",
+                    "time": "4",
+                    "status": "Not Started"
+                  },{
+                    "id": "T-027",
+                    "name": "Reorganise git repos in Assembla",
+                    "priority": "MUST",
+                    "who": "Joe",
+                    "time": "3",
+                    "status": "Not Started"
+                  }]
+                }]
+            pre.highlight.fragment
+              code.javascript(style="font-size:.9em").
+                var nested_data = d3.nest()
+                  .key(function(d) { return d.status; })
+                  .key(function(d) { return d.priority; })
+                  .rollup(function(leaves) { return leaves.length; })
+                  .entries(csv_data);
+            pre.highlight.fragment
+              code.javascript(style="font-size:.7em; line-height:1.2; max-height:130px").
+                [{
+                  "key": "Complete",
+                  "values": [{
+                    "key": "MUST",
+                    "values": 5
+                  },{
+                    "key": "SHOULD",
+                    "values": 5
+                  },{
+                    "key": "COULD",
+                    "values": 1
+                  }]
+                },{
+                  "key": "In Progress",
+                  "values": [{
+                    "key": "MUST",
+                    "values": 6
+                  },{
+                    "key": "SHOULD",
+                    "values": 1
+                  },{
+                    "key": "WISH",
+                    "values": 1
+                  }]
+                },{
+                  "key": "Not Started",
+                  "values": [{
+                    "key": "MUST",
+                    "values": 9
+                  },{
+                    "key": "SHOULD",
+                    "values": 3
+                  },{
+                    "key": "COULD",
+                    "values": 3
+                  },{
+                    "key": "WISH",
+                    "values": 1
+                  }]
+                }]
+
+
+          section
+            h4 D3 packages/submodules
+            ul.package-list
+              li
+                h4 d3-request
+                p A convenient alternative to XMLHttpRequest.
+
+              li
+                h4 d3-fetch
+                p Convenient parsing for Fetch.
+
+              li
+                h4 d3-dsv
+                p A parser and formatter for delimiter-separated values, such as CSV and TSV.
+
+              li
+                h4 d3-queue
+                p Evaluate asynchronous tasks with configurable concurrency.
+
+          section
+            h4 D3 packages/submodules
+            ul.package-list
+              li
+                h4 d3-hierarchy
+                p 2D layout algorithms for visualizing hierarchical data.
+
+              li
+                h4 d3-force
+                p Force-directed graph layout using velocity Verlet integration.
+
+              li
+                h4 d3-chord
+                p Visualizations relationships or network flow with an aesthetically-pleasing circular layout.
+
+              li
+                h4 d3-sankey
+                p Visualize flow between nodes in a directed acyclic network.
+
+              li
+                h4 d3-voronoi
+                p Compute the Voronoi diagram of a set of two-dimensional points.
+
+              li
+                h4 d3-hexbin
+                p Group two-dimensional points into hexagonal bins.
+
+          section
+            h4 D3 packages/submodules
+            ul.package-list
+              li
+                h4 d3-timer
+                p An efficient queue for managing thousands of concurrent animations.
+
+              li
+                h4 d3-dispatch
+                p Register named callbacks and call them with arguments.
+
+        section
+          h2 The End
+          h4 Thank you for watching
+
+        section
+          h1 intro to d3
+          p(style="line-height:.8; margin-bottom:0;")
+            small By <a href="http://two-n.com">Amit Schechter</a> / <a href="http://twitter.com/meetamit">@meetamit</a>
+            br
+            small Co-founder, <a href="http://two-n.com">TWO-N</a>
+            br
+            a(href="http://two-n.com", style="display:inline-block; opacity:.6; background:url(img/2n_logo.png) no-repeat center center; background-size:contain; width:90px; height:90px;")
+            br
+          br
+          p Slides available at
+            br
+            a(href="http://www.two-n.com/talks/intro-to-d3") www.two-n.com/talks/intro-to-d3
+
+
+    script(src="lib/js/head.min.js")
+    script(src="js/reveal.js")
+    script(src="lib/js/d3.js")
+
+    script.
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() {
+              [].forEach.call( document.querySelectorAll( '.highlight, pre code' ), function( v, i) {
+                  hljs.highlightBlock(v);
+              });
+          } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+    script.
+      var films = [
+        {
+          name: "Death of a Salesman",
+          critics: 100,
+          audience: 75
+        },
+        {
+          name: "Empire of the Sun",
+          critics: 92,
+          audience: 90
+        },
+        {
+          name: "Dangerous Liaisons",
+          critics: 93,
+          audience: 83
+        },
+        {
+          name: "In the Line of Fire",
+          critics: 95,
+          audience: 79
+        },
+        {
+          name: "Con Air",
+          critics: 55,
+          audience: 75
+        },
+        {
+          name: "Being John Malkovich",
+          critics: 93,
+          audience: 87
+        },
+        {
+          name: "Art School Confidential",
+          critics: 36,
+          audience: 48
+        },
+        {
+          name: "Beowulf",
+          critics: 71,
+          audience: 50
+        },
+        {
+          name: "Burn After Reading",
+          critics: 78,
+          audience: 64
+        },
+        {
+          name: "Transformers: Dark of the Moon",
+          critics: 36,
+          audience: 56
+        },
+        {
+          name: "Drunkboat",
+          critics: 25,
+          audience: 24
+        }
+      ];
+      Reveal.addEventListener( 'fragmentshown', function( event ) {
+        var fragment = d3.select(event.fragment)
+        var trigger = fragment.attr('data-fragment-trigger')
+        if(trigger) {
+          runFromTrigger(trigger)
+        }
+      });
+      Reveal.addEventListener('ready', function() {
+        d3.selectAll('.package-list h4').each(function() {
+          var packageName = d3.select(this).html();
+          var url = "https://github.com/d3/" + packageName
+          d3.select(this).html('<a href="' + url + '" target="_blank" >' + packageName + '</a>')
+        })
+      });
+
+      var filmTitles = ["Dangerous Liaisons", "In the Line of Fire", "Being John Malkovich", "Con Air", "Burn After Reading", "Drunkboat"]
+
+      d3.select('#run-simple-binding')
+        .on('click', function() {
+          d3.selectAll('.example.simple-binding').selectAll('.film')
+            .data(filmTitles)
+            .transition()
+            .delay(function(d, i) { return i * 400; })
+            .text( function(d, i) { return i + ": " + d; })
+
+        });
+
+      d3.select('#run-simple-binding-part-2')
+        .on('click', function() {
+          d3.selectAll('.example.simple-binding').selectAll('.film')
+            .data(filmTitles)
+            .on('click', function(d) {
+              alert(d);
+              console.log(this);
+            })
+            .transition()
+            .delay(function(d, i) { return i * 400; })
+            .text( function(d, i) { return i + ": " + d; })
+            .style('color', function(d) {
+              return d.indexOf('Malkovich') > -1 ? 'black' : 'gray';
+            });
+        });
+
+      function runFromTrigger(trigger) {
+        var idx = ['enter-append', 'enter-text', 'enter-color', 'enter-width', 'updating'].indexOf(trigger)
+        if(idx > -1) {
+          render(idx)
+        }
+      }
+
+      d3.select('#run-special-join')
+        .on('click', function() {
+          d3.select('.joins-diagram .data-set')
+            .transition()
+            .attr('transform', 'translate(210)');
+          d3.select('.joins-diagram .elements-set')
+            .transition()
+            .attr('transform', 'translate(510)');
+        })
+
+
+
+      var metric = 'critics';
+      var subset = 'all';
+      var barLength = d3.scaleLinear()
+      var axis = d3.axisTop()
+        .ticks(5)
+        .tickFormat(d3.format(''));
+      var logScale = d3.scaleLog();
+
+      function render(stage) {
+        if(stage == null) { stage = 4; }
+        if(barLength.toString() == logScale.toString()) {
+          barLength
+            .domain([1,100])
+            .range([0,400])
+        }
+        else {
+          barLength
+            .domain([0,100])
+            .range([0,400])
+        }
+
+
+        axis
+          .scale(barLength);
+
+        d3.selectAll('.example.append').each(function() {
+          var _films = films.filter(function(d) {
+            if(subset == "all") { return true; }
+            if(subset == "critics") { return d.critics > d.audience; }
+            if(subset == "audience") { return d.audience > d.critics; }
+          });
+
+          var selection = d3.select(this).select('.list')
+            .selectAll('.film')
+            .data(_films, function(d) { return d.name; });
+
+          var entering = selection.enter()
+            .append('div')
+            .attr('class', 'film')
+            .style('position', 'absolute')
+            .style('top', function(d, i) {
+              return i * 40 + 'px'
+            })
+          console.log(stage)
+          if(stage <  3) {
+            entering
+              .style('width', '100%')
+          }
+          if(stage >= 2) {
+            entering
+              .style('background', function(d) {
+                return d.critics > d.audience ? 'lightGreen' : 'orange'
+              })
+          }
+          if(stage >= 4) {
+            entering
+              .style('width', '0px')
+          }
+
+          var _selection = selection.merge(entering).order();
+          if( d3.select(this).classed('with-transitions') ) {
+            _selection = _selection
+              .transition()
+              .duration(400);
+          }
+          if( d3.select(this).classed('with-delay') ) {
+            _selection = _selection
+              .delay(function(d, i) { return i * 70; });
+          }
+
+          if(stage >= 2) {
+            _selection
+              .style('background', function(d) {
+                return d.critics > d.audience ? 'lightGreen' : 'orange'
+              })
+          }
+          if(stage >= 1) {
+            _selection
+              .text(function(d, i) {
+                return d[metric] + '% - ' + d.name;
+              });
+          }
+          if(stage >= 3) {
+            _selection
+              .style('width', function(d) {
+                return barLength(d[metric]) + 'px'
+              })
+          }
+
+          _selection
+            .style('top', function(d, i) {
+              return i * 40 + 'px'
+            })
+
+          selection.exit()
+            .transition()
+            .duration(400)
+            .style('width', '0px')
+            .remove();
+
+          d3.select(this).select('svg g.axis')
+            .transition()
+            .duration(400)
+            .call(axis);
+        });
+      }
+      // render();
+
+    script.
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-48893056-2', 'two-n.com');
+      ga('send', 'pageview');
