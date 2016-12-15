@@ -298,19 +298,21 @@ function render() {
     .selectAll('.film')
     .data(films);
 </span><span data-fragment-index="2" class="fragment">&nbsp;
-  var entering = selection.enter()
+  selection.enter()
     .append('div')
-    .attr('class', 'film')
-</span><span data-fragment-index="3" class="fragment">&nbsp;
-  selection.merge(entering)
+    .attr('class', 'film')</span><span data-fragment-index="3" class="fragment">&nbsp;
+  .merge(selection)
     .text(function(d, i) { .... }
-    .style('background', function(d) { ....  }</span><span data-fragment-index="4" class="fragment">&nbsp;
+    .style('background', function(d) { .... }</span><span data-fragment-index="4" class="fragment">&nbsp;
     .style('width', function(d) {
       return (d[metric] * 4) + 'px';
     })</span><span>&nbsp;
 }</span></div></pre><div class="example append"><div class="example-controls"><a href="javascript:void(0);" onclick="metric='critics'; render();">Critic Reviews</a>|<a href="javascript:void(0);" onclick="metric='audience'; render();">Audience Reviews</a></div><div class="graphic list"></div></div></section></section><section><section><h3>Transitions</h3><pre data-fragment-index="1" data-fragment-trigger="updating" style="clear: left;" class="highlight code-left fragment"><div class="code javascript"><span>function render() {
   // ....
-  selection.merge(entering)
+  selection.enter()
+    .append('div')
+    .attr('class', 'film')
+  .merge(selection)
     .transition()
     .duration(400)
     .delay(function(d, i) { return i * 50; })
@@ -330,7 +332,7 @@ function render() {
   selection.enter()
     .style('width', '0px')</span><span data-fragment-index="2" class="fragment">&nbsp;
   // ....
-  selection.merge(entering)
+  .merge(selection)
     .transition()
     .duration(400)
     .style('width', function(d) {
@@ -710,7 +712,7 @@ function render(stage) {
       .style('top', function(d, i) {
         return i * 40 + 'px'
       })
-    console.log(stage)
+
     if(stage <  3) {
       entering
         .style('width', '100%')
@@ -726,7 +728,7 @@ function render(stage) {
         .style('width', '0px')
     }
 
-    var _selection = selection.merge(entering).order();
+    var _selection = entering.merge(selection).order();
     if( d3.select(this).classed('with-transitions') ) {
       _selection = _selection
         .transition()

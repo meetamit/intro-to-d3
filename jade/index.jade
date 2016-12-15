@@ -595,15 +595,14 @@ head
 
                 span.fragment(data-fragment-index="2").
                   &nbsp;
-                    var entering = selection.enter()
+                    selection.enter()
                       .append('div')
                       .attr('class', 'film')
-
                 span.fragment(data-fragment-index="3").
                   &nbsp;
-                    selection.merge(entering)
+                    .merge(selection)
                       .text(function(d, i) { .... }
-                      .style('background', function(d) { ....  }
+                      .style('background', function(d) { .... }
                 span.fragment(data-fragment-index="4").
                   &nbsp;
                       .style('width', function(d) {
@@ -627,7 +626,10 @@ head
                 span.
                   function render() {
                     // ....
-                    selection.merge(entering)
+                    selection.enter()
+                      .append('div')
+                      .attr('class', 'film')
+                    .merge(selection)
                       .transition()
                       .duration(400)
                       .delay(function(d, i) { return i * 50; })
@@ -665,7 +667,7 @@ head
                 span.fragment(data-fragment-index="2").
                   &nbsp;
                     // ....
-                    selection.merge(entering)
+                    .merge(selection)
                       .transition()
                       .duration(400)
                       .style('width', function(d) {
@@ -1452,7 +1454,7 @@ head
             .style('top', function(d, i) {
               return i * 40 + 'px'
             })
-          console.log(stage)
+
           if(stage <  3) {
             entering
               .style('width', '100%')
@@ -1468,7 +1470,7 @@ head
               .style('width', '0px')
           }
 
-          var _selection = selection.merge(entering).order();
+          var _selection = entering.merge(selection).order();
           if( d3.select(this).classed('with-transitions') ) {
             _selection = _selection
               .transition()
