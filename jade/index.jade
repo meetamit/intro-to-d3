@@ -110,6 +110,13 @@ head
       font-size:.75em;
       color: #777;
     }
+    .package-examples {
+      line-height: .5 !important;
+    }
+    .package-examples a {
+      font-size: .5em;
+      margin-right: .5em;
+    }
 
   body
     .reveal
@@ -133,6 +140,7 @@ head
           section(data-background="http://two-n.com/projects/art-genome-browser/2.jpg", data-background-size="contain")
           section(data-background="http://two-n.com/projects/art-genome-browser/3.jpg", data-background-size="contain")
           section(data-background="http://two-n.com/projects/art-genome-browser/5.jpg", data-background-size="contain")
+            a.fragment(href="http://two-n.com/artsy/" target='_blank' style="position:absolute; right:0;") DEMO
 
           section(data-background="http://two-n.com/projects/lgbt-divide/3.jpg", data-background-size="contain")
           section(data-background="http://two-n.com/projects/lgbt-divide/4.jpg", data-background-size="contain")
@@ -987,14 +995,22 @@ head
               li
                 h4 d3-drag
                 p Drag and drop SVG, HTML or Canvas using mouse or touch input.
+                .package-examples
+                  a(href="https://bl.ocks.org/mbostock/22994cc97fefaeede0d861e6815a847e" target='_blank') example 1
+                  a(href="http://codepen.io/meetamit/pen/xbxddo" target='_blank') example 2
 
               li
                 h4 d3-zoom
                 p Pan and zoom SVG, HTML or Canvas using mouse or touch input.
+                .package-examples
+                  a(href="https://bl.ocks.org/mbostock/6123708" target='_blank') example 1
+                  a(href="https://bl.ocks.org/mbostock/3892928" target='_blank') example 2
 
               li
                 h4 d3-brush
                 p Select a one- or two-dimensional region using the mouse or touch.
+                .package-examples
+                  a(href="http://bl.ocks.org/mbostock/34f08d5e11952a80609169b7917d4172" target='_blank') example
 
           section
             h4 D3 packages/submodules
@@ -1002,6 +1018,12 @@ head
               li
                 h4 d3-shape
                 p Graphical primitives for visualization, such as lines and areas.
+                .package-examples
+                  a(href="https://bl.ocks.org/mbostock/3883245" target='_blank') line chart
+                  a(href="https://bl.ocks.org/mbostock/3883195" target='_blank') area chart
+                  a(href="https://github.com/d3/d3-shape#curves" target='_blank') curves
+                  a(href="http://bl.ocks.org/mbostock/3886208" target='_blank') stack
+                  a(href="http://bl.ocks.org/mbostock/4060954" target='_blank') stream
 
               li
                 h4 d3-axis
@@ -1015,16 +1037,25 @@ head
             h4 D3 packages/submodules
             ul.package-list
               li
-                h4 d3-geo-projection
-                p Extended geographic projections for d3-geo.
-
-              li
                 h4 d3-geo
                 p Geographic projections, spherical shapes and spherical trigonometry.
+                .package-examples
+                  a(href="http://bl.ocks.org/mbostock/5557726" target='_blank') TopoJSON
+                  a(href="https://bl.ocks.org/mbostock/6713736" target='_blank') globe
+                  a(href="https://bl.ocks.org/mbostock/3795544" target='_blank') adaptive
+
+              li
+                h4 d3-geo-projection
+                p Extended geographic projections for d3-geo.
+                .package-examples
+                  a(href="https://github.com/d3/d3-geo-projection" target='_blank') docs
+                  a(href="http://bl.ocks.org/mbostock/4282586" target='_blank') rotation
 
               li
                 h4 d3-tile
                 p Compute the quadtree tiles to display in a rectangular viewport.
+                .package-examples
+                  a(href="http://bl.ocks.org/mbostock/5593150" target='_blank') vectors
 
 
           section
@@ -1033,6 +1064,8 @@ head
               li
                 h4 d3-array
                 p Array manipulation, ordering, searching, summarizing, etc.
+                .package-examples
+                  a(href="http://projects.two-n.com/world-gender/" target='_blank') gender gap histogram
 
               li
                 h4 d3-collection
@@ -1041,6 +1074,9 @@ head
               li
                 h4 d3-quadtree
                 p Two-dimensional recursive spatial subdivision.
+                .package-examples
+                  a(href="http://bl.ocks.org/mbostock/9078690" target='_blank') nearest
+                  a(href="http://bl.ocks.org/mbostock/4343214" target='_blank') brushed
 
               li
                 h4 d3-polygon
@@ -1205,26 +1241,50 @@ head
               li
                 h4 d3-hierarchy
                 p 2D layout algorithms for visualizing hierarchical data.
+                .package-examples
+                  a(href="https://github.com/d3/d3-hierarchy#hierarchy" target='_blank') docs
+                  a(href="https://bl.ocks.org/mbostock/4063570" target='_blank') tree
+                  a(href="http://bl.ocks.org/mbostock/c034d66572fd6bd6815a" target='_blank') radial tree
+                  a(href="https://bl.ocks.org/mbostock/4339083" target='_blank') tidy tree
+                  a(href="http://prototypes.two-n.com/nba-scorecard/#view=Treemap" target='_blank') treemap
+                  a(href="http://bl.ocks.org/mbostock/7607535" target='_blank') pack
 
               li
                 h4 d3-force
                 p Force-directed graph layout using velocity Verlet integration.
+                .package-examples
+                  a(href="https://bl.ocks.org/mbostock/1153292" target='_blank') lawsuits
+                  a(href="http://bl.ocks.org/mbostock/ad70335eeef6d167bc36fd3c04378048" target='_blank') draggable
+                  a(href="http://bl.ocks.org/mbostock/95aa92e2f4e8345aaa55a4a94d41ce37" target='_blank') hierarchical
+                  a(href="http://bl.ocks.org/mbostock/6526445e2b44303eebf21da3b6627320" target='_blank') beeswarm
 
               li
                 h4 d3-chord
                 p Visualizations relationships or network flow with an aesthetically-pleasing circular layout.
+                .package-examples
+                  a(href="http://bl.ocks.org/mbostock/4062006" target='_blank') hair color?
 
               li
                 h4 d3-sankey
                 p Visualize flow between nodes in a directed acyclic network.
+                .package-examples
+                  a(href="https://bost.ocks.org/mike/sankey/" target='_blank') energy flow
+                  a(href="http://prototypes.two-n.com/athena-mapper/" target='_blank') transactions
 
               li
                 h4 d3-voronoi
                 p Compute the Voronoi diagram of a set of two-dimensional points.
+                .package-examples
+                  a(href="http://bl.ocks.org/mbostock/4360892" target='_blank') airports
+                  a(href="http://bl.ocks.org/mbostock/6675193" target='_blank') dynamic
+                  a(href="http://bl.ocks.org/mbostock/8033015" target='_blank') rollover
 
               li
                 h4 d3-hexbin
                 p Group two-dimensional points into hexagonal bins.
+                .package-examples
+                  a(href="http://bl.ocks.org/syntagmatic/748b02519c942c5291f302e060315ad6" target='_blank') heatmap
+                  a(href="https://bl.ocks.org/mbostock/7833311" target='_blank') dynamic
 
           section
             h4 D3 packages/submodules
